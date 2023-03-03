@@ -1,5 +1,6 @@
 import React from "react";
 import { Props } from "./types";
+import styles from "./AddNote.module.scss";
 
 export const AddNote: React.FC<Props> = ({
   handleSubmit,
@@ -7,29 +8,33 @@ export const AddNote: React.FC<Props> = ({
   note,
 }) => {
   return (
-    <form onSubmit={handleSubmit} data-testid="submit-button">
-      <div>
-        <label>Title</label>
+    <form
+      onSubmit={handleSubmit}
+      data-testid="submit-button"
+      className={styles.container}
+    >
+      <div className={styles.subContainer}>
         <input
           name="title"
           value={note.title}
+          className={styles.title}
           onChange={handleChange}
           data-testid="title-input"
+          placeholder="title..."
           required
         />
-      </div>
-      <div>
-        <label>Text</label>
-        <textarea
-          name="text"
-          value={note.text}
-          onChange={handleChange}
-          data-testid="text-input"
-          required
-        />
-      </div>
-      <div>
-        <button>Add Note</button>
+        <div className={styles.noteContainer}>
+          <textarea
+            name="text"
+            className={styles.note}
+            value={note.text}
+            placeholder="Note..."
+            onChange={handleChange}
+            data-testid="text-input"
+            required
+          />
+        </div>
+        <button className={styles.submitButton}>Save</button>
       </div>
     </form>
   );

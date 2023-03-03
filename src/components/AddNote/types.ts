@@ -1,5 +1,5 @@
 export interface Props {
     handleSubmit(): void;
-    handleChange(e: any): void;
+    handleChange(event: React.ChangeEvent<HTMLElement>): void;
     note: { id: string, title: string, text: string}
 }

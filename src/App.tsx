@@ -1,36 +1,36 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { submitNote, deleteNote } from "./redux/actions";
-import ListNotes from './components/ListNotes/ListNotes';
+import ListNotes from "./components/ListNotes/ListNotes";
 import { NotesState } from "./redux/notesReducer";
-import { AddNote } from './components/AddNote/AddNote'
-import { v1 as uuidv1 } from 'uuid';
+import { AddNote } from "./components/AddNote/AddNote";
+import { v1 as uuidv1 } from "uuid";
 
 const App = () => {
   const [note, setNote] = useState({
-    id: '',
+    id: "",
     title: "",
-    text: ""
+    text: "",
   });
   const notes = useSelector((state: NotesState[]) => state);
 
   const dispatch = useDispatch();
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    let newNote: any = { ...note };
+    let newNote: NotesState = { ...note };
     newNote.id = uuidv1();
-    newNote[name] = value;
+    newNote[name as keyof NotesState] = value;
     setNote(newNote);
   };
 
   const handleSubmit = () => {
     dispatch(submitNote(note));
     setNote({
-      id: '',
+      id: "",
       title: "",
-      text: ""
+      text: "",
     });
   };
 
@@ -39,22 +39,26 @@ const App = () => {
     setNote({
       id: note[0].id,
       title: note[0].title,
-      text: note[0].text
-    })
-    dispatch(deleteNote(note[0].id))
+      text: note[0].text,
+    });
+    dispatch(deleteNote(note[0].id));
   };
 
   const onDeleteNote = (id: string) => {
-    dispatch(deleteNote(id))
+    dispatch(deleteNote(id));
   };
 
   return (
     <div className="App">
-      Notes
-      <AddNote handleSubmit={handleSubmit} handleChange={handleChange} note={note}/>
-      <ListNotes editNote={onEditNote} deleteNote={onDeleteNote}/>
+      <header>Notes</header>
+      <AddNote
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        note={note}
+      />
+      <ListNotes editNote={onEditNote} deleteNote={onDeleteNote} />
     </div>
   );
-}
+};
 
 export default App;

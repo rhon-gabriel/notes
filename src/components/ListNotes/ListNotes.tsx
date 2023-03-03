@@ -9,19 +9,19 @@ const ListNotes: React.FC<Props> = ({ editNote, deleteNote }) => {
 
   return (
     <div className={styles.listNotes}>
-      {notes.map((note: any) => (
+      {notes.map((note: NotesState) => (
         <div className={styles.note} key={note.id}>
           <p>{note.title}</p>
           <p>{note.text}</p>
           <div className={styles.actionsContainer}>
             <button
-              className={styles.editButton}
+              className={`${styles.button} ${styles.editButton}`}
               onClick={() => editNote(note.id)}
             >
               Edit
             </button>
             <button
-              className={styles.deleteButton}
+              className={`${styles.button} ${styles.deleteButton}`}
               onClick={() => deleteNote(note.id)}
             >
               Delete
