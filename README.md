@@ -1,6 +1,6 @@
 # Notes app
 
-Simple web app for create notes.
+Simple web app for creating notes.
 
 ## How to run
 1. clone the repository
