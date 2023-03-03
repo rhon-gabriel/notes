@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
-import { useDispatch } from "react-redux";
-import { submitNote } from "./redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { submitNote, deleteNote } from "./redux/actions";
+import ListNotes from './components/ListNotes/ListNotes';
+import { NotesState } from "./redux/notesReducer";
 import { AddNote } from './components/AddNote/AddNote'
 import { v1 as uuidv1 } from 'uuid';
 
@@ -11,6 +13,7 @@ const App = () => {
     title: "",
     text: ""
   });
+  const notes = useSelector((state: NotesState[]) => state);
 
   const dispatch = useDispatch();
 
@@ -31,10 +34,25 @@ const App = () => {
     });
   };
 
+  const onEditNote = (id: string) => {
+    const note = notes.filter((note) => note.id === id);
+    setNote({
+      id: note[0].id,
+      title: note[0].title,
+      text: note[0].text
+    })
+    dispatch(deleteNote(note[0].id))
+  };
+
+  const onDeleteNote = (id: string) => {
+    dispatch(deleteNote(id))
+  };
+
   return (
     <div className="App">
       Notes
       <AddNote handleSubmit={handleSubmit} handleChange={handleChange} note={note}/>
+      <ListNotes editNote={onEditNote} deleteNote={onDeleteNote}/>
     </div>
   );
 }
